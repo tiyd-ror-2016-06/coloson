@@ -5,7 +5,9 @@ require "pry"
 DB = {}
 
 class Coloson < Sinatra::Base
-  # Your code goes here ...
+  def self.reset_database
+    DB.clear
+  end
 end
 
 Coloson.run! if $PROGRAM_NAME == __FILE__

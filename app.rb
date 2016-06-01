@@ -2,6 +2,7 @@ require "sinatra/base"
 require "sinatra/json"
 require "pry"
 require "json"
+require "./tests.rb"
 
 DB = {
   "evens" => [],
@@ -113,7 +114,11 @@ class Coloson < Sinatra::Base
     body(json DB["odds"])
     #binding.pry
   end
-
 end
+
+
+
+
+
 
 Coloson.run! if $PROGRAM_NAME == __FILE__

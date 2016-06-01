@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'minitest/focus'
 
 require 'minitest/reporters'
-Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require 'rack/test'
 
@@ -70,7 +70,7 @@ class ColosonTest < Minitest::Test
 
     response = get "/numbers/primes/sum"
     assert_equal 200, response.status
-
+    #binding.pry
     body = JSON.parse response.body
     assert_equal "ok", body["status"]
     assert_equal 579, body["sum"]
@@ -80,7 +80,6 @@ class ColosonTest < Minitest::Test
     1.upto(4).each do |i|
       post "/numbers/mine", number: i
     end
-
     response = get "/numbers/mine/product"
     assert_equal 200, response.status
 
@@ -96,9 +95,9 @@ class ColosonTest < Minitest::Test
 
     response = get "/numbers/mine/product"
     assert_equal 422, response.status
-
     body = JSON.parse response.body
     assert_equal "error", body["status"]
+
     assert_equal "Only paid users can multiply numbers that large", body["error"]
   end
 end

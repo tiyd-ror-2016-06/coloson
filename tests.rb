@@ -20,6 +20,7 @@ class ColosonTest < Minitest::Test
     app.reset_database
   end
 
+  focus
   def test_it_can_store_numbers
     response = get "/numbers/evens"
 

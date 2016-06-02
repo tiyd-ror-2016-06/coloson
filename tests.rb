@@ -55,7 +55,6 @@ class ColosonTest < Minitest::Test
     assert_equal [13], JSON.parse(response.body)
   end
 
-  focus
   def test_it_wont_add_non_numbers
     response = post "/numbers/odds", number: "eleventy"
     assert_equal 422, response.status
@@ -79,6 +78,7 @@ class ColosonTest < Minitest::Test
   end
 
   def test_it_can_multiply_small_numbers
+    skip
     1.upto(4).each do |i|
       post "/numbers/mine", number: i
     end
@@ -92,6 +92,7 @@ class ColosonTest < Minitest::Test
   end
 
   def test_it_cant_multiply_larger_numbers
+    skip
     1.upto(10).each do |i|
       post "/numbers/mine", number: i
     end

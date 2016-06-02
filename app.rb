@@ -42,6 +42,14 @@ class Coloson < Sinatra::Base
     body "ok"
   end
 
+  get "/numbers/:collection/sum" do
+    c = get_collection
+    json(
+      status: "ok",
+      sum: c.reduce(:+)
+    )
+  end
+
   def get_collection
     DB[ params[:collection] ] ||= []
     DB[ params[:collection] ]

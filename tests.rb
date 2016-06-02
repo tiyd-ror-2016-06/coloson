@@ -20,7 +20,6 @@ class ColosonTest < Minitest::Test
     app.reset_database
   end
 
-  focus
   def test_it_can_store_numbers
     response = get "/numbers/evens"
 
@@ -43,11 +42,13 @@ class ColosonTest < Minitest::Test
     assert_equal "[]", response.body
   end
 
+  focus
   def test_it_can_delete_numbers
     post "/numbers/odds", number: 5
     post "/numbers/odds", number: 13
 
     response = get "/numbers/odds"
+    assert_equal 200, response.status
     assert_equal [5,13], JSON.parse(response.body)
 
     delete "/numbers/odds", number: 5

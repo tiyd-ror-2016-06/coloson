@@ -17,19 +17,25 @@ class Coloson < Sinatra::Base
     DB.clear
   end
 
-  get "/numbers/evens" do
-    # unless DB["evens"]
-    #   DB["evens"] = []
-    # end
-    DB["evens"] ||= []
+  get "/numbers/:collection" do
+    DB[ params[:collection] ] ||= []
 
-    body DB["evens"].to_json
+    body DB[ params[:collection] ].to_json
   end
 
-  post "/numbers/evens" do
+  post "/numbers/:collection" do
     number = params[:number].to_i
 
-    DB["evens"].push number
+    DB[ params[:collection] ] ||= []
+    DB[ params[:collection] ].push number
+
+    body "ok"
+  end
+
+  delete "/numbers/:collection" do
+    number = params[:number].to_i
+
+    DB[ params[:collection] ].delete number
 
     body "ok"
   end

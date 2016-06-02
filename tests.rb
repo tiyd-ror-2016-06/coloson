@@ -42,7 +42,6 @@ class ColosonTest < Minitest::Test
     assert_equal "[]", response.body
   end
 
-  focus
   def test_it_can_delete_numbers
     post "/numbers/odds", number: 5
     post "/numbers/odds", number: 13
@@ -56,6 +55,7 @@ class ColosonTest < Minitest::Test
     assert_equal [13], JSON.parse(response.body)
   end
 
+  focus
   def test_it_wont_add_non_numbers
     response = post "/numbers/odds", number: "eleventy"
     assert_equal 422, response.status

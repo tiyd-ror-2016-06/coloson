@@ -22,11 +22,16 @@ class Coloson < Sinatra::Base
   end
 
   post "/numbers/:collection" do
-    number = params[:number].to_i
-
-    get_collection.push number
-
-    body "ok"
+    if is_valid_number? params[:number]
+      get_collection.push params[:number].to_i
+      body "ok"
+    else
+      status 422
+      json(
+        status: "error",
+        error: "Invalid number: #{params[:number]}"
+      )
+    end
   end
 
   delete "/numbers/:collection" do
@@ -40,6 +45,10 @@ class Coloson < Sinatra::Base
   def get_collection
     DB[ params[:collection] ] ||= []
     DB[ params[:collection] ]
+  end
+
+  def is_valid_number? string
+    string.to_i.to_s == string
   end
 end
 

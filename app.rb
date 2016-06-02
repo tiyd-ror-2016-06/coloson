@@ -18,16 +18,13 @@ class Coloson < Sinatra::Base
   end
 
   get "/numbers/:collection" do
-    DB[ params[:collection] ] ||= []
-
-    body DB[ params[:collection] ].to_json
+    json get_collection
   end
 
   post "/numbers/:collection" do
     number = params[:number].to_i
 
-    DB[ params[:collection] ] ||= []
-    DB[ params[:collection] ].push number
+    get_collection.push number
 
     body "ok"
   end
@@ -35,9 +32,14 @@ class Coloson < Sinatra::Base
   delete "/numbers/:collection" do
     number = params[:number].to_i
 
-    DB[ params[:collection] ].delete number
+    get_collection.delete number
 
     body "ok"
+  end
+
+  def get_collection
+    DB[ params[:collection] ] ||= []
+    DB[ params[:collection] ]
   end
 end
 

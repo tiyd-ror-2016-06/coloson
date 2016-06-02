@@ -5,7 +5,9 @@ require "pry"
 DB = {}
 
 class Coloson < Sinatra::Base
+  set :logging, true
   set :show_exceptions, false
+
   error do |e|
     raise e
   end
